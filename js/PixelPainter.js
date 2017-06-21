@@ -79,8 +79,8 @@ window.PixelPainter = (function(){
     newButton.innerHTML = name;
     newButton.addEventListener("click", f);
     doc.body.appendChild(newButton);
-    let br = doc.createElement("br");
-    doc.body.appendChild(br);
+    //let br = doc.createElement("br");
+    //doc.body.appendChild(br);
   }
 
   paint.erase = function(e){
@@ -119,7 +119,7 @@ window.PixelPainter = (function(){
 
   //generate grids
   var fill = ["black", "white", "brown", "gray", "red", "orange", "yellow", "green", "blue", "indigo", "violet", "purple"];
-  PixelPainter.createGrid(30, 2, "box ", 1, fill);
+  PixelPainter.createGrid(24, 2, "box ", 1, fill);
 
   var fill2 = ["white", "white"];
   PixelPainter.createGrid(50, 50, "grid ", 2, fill2);
