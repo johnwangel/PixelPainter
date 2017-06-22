@@ -41,34 +41,41 @@ button:hover {
 }
 
 /*color-swatch grid*/
-.wrapper1 {
+.palette {
   display: grid;
-  grid-template-columns: repeat(var(--colNum1), 15px);
-  grid-template-rows: repeat(var(--rowNum1), 15px);
-  margin: 10px;
-  float: left;
-
+  width: 100px;
 }
 
 /*canvas grid*/
-.wrapper2 {
-  display: grid;
-  grid-template-columns: repeat(var(--colNum2), 10px);
-  grid-template-rows: repeat(var(--rowNum2), 10px);
-  float: center;
-
+.canvas {
+  position: absolute;
+  top: 160px;
+  left: 125px;
+  width:750px;
 }
 
 /*divs in color-swatch grid*/
-.box {
-  border: 1px solid black;
+div.box {
+    width: 25px;
+    height: 25px;
+    outline: .5px black solid;
+    float: left;
 }
 
-.box:hover {
+div.box:hover {
   border: 1px solid red;
 }
 
+section{
+  width: 100%;
+}
+
 /*divs in canvas grid*/
-.grid {
-  border: .1px solid lightgray;
+div.grid {
+
+    top: 10px;
+    width: 15px;
+    height: 15px;
+    outline: .5px lightGray solid ;
+    float: right;
 }

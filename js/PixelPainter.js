@@ -1,59 +1,137 @@
+/*jshint esversion: 6 */
 window.PixelPainter = (function(){
 
   let paint = {};
-
   const doc = document;
   const body = document.querySelector('body');
   let currentColor = "color";
   let e = event;
   let flag = false;
 
+  paint.getProps = function(props){
+
+    let paletteProps = {};
+    paletteProps.idNo = 1;
+    paletteProps.columns = 2;
+    paletteProps.rows = 30;
+    paletteProps.divName = "palette";
+    paletteProps.className = "box ";
+    paletteProps.fill =  ["black", "white", "brown", "gray", "red", "orange", "yellow", "green", "blue", "indigo", "violet", "purple"];
+
+    let canvasProps = {};
+    canvasProps.idNo = 2;
+    canvasProps.columns = 50;
+    canvasProps.rows = 50;
+    canvasProps.divName = "canvas";
+    canvasProps.className = "grid ";
+    canvasProps.fill = ["white"];
+
+    let eraseButtonProps = {};
+    eraseButtonProps.name = "Erase";
+
+    let clearButtonProps = {};
+    clearButtonProps.name = "Clear";
+
+    switch (props){
+      case "palette":
+        return paletteProps;
+      case "canvas":
+        return  canvasProps;
+      case "erase":
+        return  eraseButtonProps;
+      case "clear":
+        return clearButtonProps;
+    }
+  };
+
+  paint.createButton = function(props){
+    let f = function(){};
+    if (props[name] == "Erase"){
+      f = PixelPainter.erase;
+    }
+    if (props[name] == "Clear"){
+      f = PixelPainter.clear;
+    }
+    let newButton = doc.createElement("button");
+    newButton.setAttribute("id", props.name);
+    newButton.innerHTML = props.name;
+    newButton.addEventListener("click", f);
+    return newButton;
+  };
+
+
+  paint.createGrid = function(props){
+    let f = function(){};
+    if (props.divName === "palette"){
+      f = PixelPainter.loadColor;
+    }
+    if (props.divName === "canvas"){
+      f = PixelPainter.paint;
+    }
+
+    let colorNo = 0;
+    let propID = props.divName;
+    let mainDiv = doc.createElement("div");
+    mainDiv.setAttribute("class", propID);
+    for (var i = 1; i <= props.rows; i++) {
+      let rowDiv = document.createElement("section");
+      let cn = props.className + "row " + i;
+      rowDiv.setAttribute("class", cn);
+      idn = cn.replace(/\s/gi, "_");
+      rowDiv.setAttribute("id", idn);
+
+
+      for (var j = 1; j <= props.columns; j++){
+          let colDiv = document.createElement("div");
+          let cn = props.className + "row " + i + " col " + j;
+          colDiv.setAttribute("class", cn);
+          idn = cn.replace(/\s/gi, "_");
+          colDiv.setAttribute("id", idn);
+
+          var myColor = "";
+          if (props.fill[colorNo] === undefined && props.idNo === 1) {
+            myColor = generateColor();
+          }
+          else if (props.idNo === 1) {
+            myColor = props.fill[colorNo];
+          }
+          else {
+            myColor = "white";
+          }
+
+          colDiv.setAttribute("style", "background-color:" + myColor);
+          let func = "";
+          if (propID === "palette") {
+            let f = this.assignColor;
+            colDiv.addEventListener("click", f);
+          }
+          if (propID === "canvas") {
+            let f = this.paint;
+            colDiv.addEventListener("mousedown", f);
+            colDiv.addEventListener("mousemove", f);
+            colDiv.addEventListener("mouseup", f);
+          }
+          rowDiv.append(colDiv);
+          colorNo++;
+        }
+      mainDiv.append(rowDiv);
+    }
+    return mainDiv;
+  };
+
   paint.setColor = function(color){
+    console.log(color);
     currentColor = color;
-  }
+  };
 
   paint.getColor = function(){
     return currentColor;
-  }
+  };
 
-  paint.createGrid = function(width, height, className, f, fill) {
-
-    doc.documentElement.style.setProperty("--rowNum" + String(f), width);
-    doc.documentElement.style.setProperty("--colNum" + String(f), height);
-    let mainDiv = doc.createElement("div");
-    mainDiv.setAttribute("class", "wrapper" + f);
-    for (var i = 0; i < width * height; i++) {
-
-      let classVar = className + i;
-      let idVar = "id_" + i;
-      let subDiv = document.createElement("div");
-      subDiv.setAttribute("class", classVar);
-      subDiv.setAttribute("id", idVar);
-      var myColor = "";
-      if (fill[i] === undefined && f === 1) {
-        myColor = generateColor();
-      }
-      else if (f === 1) { myColor = fill[i]; }
-      else { myColor = "white"; }
-
-      subDiv.setAttribute("style", "background-color:" + myColor);
-      let func = "";
-      if (f === 1) {
-        let func = PixelPainter.assignColor;
-        subDiv.addEventListener("click", func);
-      };
-      if (f === 2) {
-        let func = PixelPainter.paint;
-        subDiv.addEventListener("mousedown", func);
-        subDiv.addEventListener("mousemove", func);
-        subDiv.addEventListener("mouseup", func);
-      };
-
-      mainDiv.append(subDiv);
-    }
-    doc.body.appendChild(mainDiv);
-  }
-
+  paint.loadColor = function(e){
+        currentColor = e.currentTarget.style.getPropertyValue("background-color");
+        PixelPainter.setColor(currentColor);
+  };
 
   paint.paint = function(e){
     if (e.type == "mousedown"){
@@ -67,34 +145,19 @@ window.PixelPainter = (function(){
       console.log("Mouse Up");
       flag = false;
     }
-  }
-
-
-  paint.createButton = function(name, f){
-    if (f === 1) { f = PixelPainter.erase; };
-    if (f === 2) { f = PixelPainter.clear; };
-
-    let newButton = doc.createElement("button");
-    newButton.setAttribute("id", name);
-    newButton.innerHTML = name;
-    newButton.addEventListener("click", f);
-    doc.body.appendChild(newButton);
-    let br = doc.createElement("br");
-    doc.body.appendChild(br);
-  }
-
-  paint.erase = function(e){
-    PixelPainter.setColor("white");
-  }
+  };
 
   paint.clear = function(e){
     var gridDivs = doc.getElementsByClassName("grid");
     i = gridDivs.length;
     while (i--){
       gridDivs[i].style.backgroundColor = "white";
-
     }
-  }
+  };
+
+  paint.erase = function(e){
+    PixelPainter.setColor("white");
+  };
 
   function generateColor() {
     var r = Math.floor(Math.random() * 256);
@@ -103,23 +166,13 @@ window.PixelPainter = (function(){
     return "rgb(" + r + "," + g + "," + b + ")";
   }
 
-  paint.assignColor = function(e){
-        currentColor = e.currentTarget.style.getPropertyValue("background-color");
-        PixelPainter.setColor(currentColor);
-  }
-
   return paint;
 
 })();
 
-  //generate buttons
-  PixelPainter.createButton("Erase", 1);
-
-  PixelPainter.createButton("Clear", 2);
-
-  //generate grids
-  var fill = ["black", "white", "brown", "gray", "red", "orange", "yellow", "green", "blue", "indigo", "violet", "purple"];
-  PixelPainter.createGrid(30, 2, "box ", 1, fill);
-
-  var fill2 = ["white", "white"];
-  PixelPainter.createGrid(50, 50, "grid ", 2, fill2);
+let myButton = PixelPainter.createButton(PixelPainter.getProps("erase"));
+document.body.appendChild(myButton);
+myButton = PixelPainter.createButton(PixelPainter.getProps("clear"));
+document.body.appendChild(myButton);
+document.body.appendChild(PixelPainter.createGrid(PixelPainter.getProps("palette")));
+document.body.appendChild(PixelPainter.createGrid(PixelPainter.getProps("canvas")));
