@@ -1,0 +1,111 @@
+body {
+  margin: 20px;
+  background-color: darkgray;
+  background: url("tiles.jpg");
+}
+
+h1{
+  position: absolute;
+  top: 25px;
+  left: 250px;
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 80px;
+  border: 1px solid lightgray;
+  height: 100px;
+  width: 600px;
+  color: white;
+  background-color: skyblue;
+  color: white;
+  box-shadow: 1.5px 1.5px 1.5px black;
+  text-shadow: 1.5px 1.5px 1.5px black;
+}
+
+button {
+  margin: 1px;
+  background-color: blue; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  border-radius: 8px;
+  width: 20%;
+  /*margin-left: 30%;
+  margin-right: 30%*/
+}
+
+button:hover {
+    background-color: purple;
+    color: white;
+}
+
+/*color-swatch grid*/
+.palette {
+  position: absolute;
+  top: 200px;
+  left: 120px;
+  display: grid;
+  margin: 10px;
+  /*float: left;*/
+  border: 2px solid darkgray;
+  /*position: relative;*/
+  width: 40px
+  height: 20px;
+}
+
+/*canvas grid*/
+.canvas {
+  position: absolute;
+  top: 200px;
+  left: 200px;
+  width: 750px;
+  box-shadow: 5px 5px 5px #888888;
+}
+
+
+/*divs in color-swatch grid*/
+div.box {
+    width: 20px;
+    height: 20px;
+    outline: .5px black solid;
+    float: left;
+}
+
+div.box:hover {
+  border: 1px solid red;
+}
+
+/*divs in canvas grid*/
+div.grid {
+    top: 10px;
+    width: 15px;
+    height: 15px;
+    outline: .5px lightGray solid ;
+    float: left;
+}
+
+#Erase{
+  position: absolute;
+  top:820;
+  left: 980;
+  width: 150px;
+  box-shadow: 1.5px 1.5px 1.5px black;
+  text-shadow: 1.5px 1.5px 1.5px black;
+  background-color: skyblue;
+  color: white;
+}
+
+#Clear{
+  position: absolute;
+  top: 890;
+  left: 980;
+  width: 150px;
+  box-shadow: 1.5px 1.5px 1.5px black;
+  text-shadow: 1.5px 1.5px 1.5px black;
+  background-color: skyblue;
+  color: white;
+}
+
