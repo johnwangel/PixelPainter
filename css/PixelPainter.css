@@ -1,28 +1,25 @@
-:root {
-  --rowNum1: 4;
-  --colNum1: 5;
-  --rowNum2: 4;
-  --colNum2: 5;
-  --gridRows: 25px;
-  --wrapperH: 40px; // for demonstrating the use of CSS Variables
-}
-
-
 body {
   margin: 40px;
   background-color: darkgray;
+  background: url("balloon.jpeg");
 
 }
 
 h1{
   text-align: center;
-  font: Arial;
+  font-family: Arial;
+  font-size: 80px;
   border: 2px solid black;
-  background-color: white;
+  background-color: lightgray;
+  text-decoration-style:
+  width: 300px;
+  height: 100px;
+  color: white;
+  text-shadow: 1px 1px 1px #888888;
 }
 
 button {
-  margin: 10px;
+  margin: 1px;
   background-color: blue; /* Green */
   border: none;
   color: white;
@@ -30,34 +27,45 @@ button {
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 12px;
+  font-size: 18px;
   border-radius: 8px;
-  /*float:left;*/
+  width: 20%;
+  /*margin-left: 30%;
+  margin-right: 30%*/
 }
 
 button:hover {
-    background-color: purple; /* Green */
+    background-color: purple;
     color: white;
 }
 
 /*color-swatch grid*/
 .palette {
   display: grid;
-  width: 100px;
+  margin: 10px;
+  /*float: left;*/
+  border: 6px solid white;
+  /*position: relative;*/
+  position: absolute;
+  top: 150;
+  left: 40;
+  width: 40px
+  height: 20px;
 }
 
 /*canvas grid*/
 .canvas {
   position: absolute;
   top: 160px;
-  left: 125px;
-  width:750px;
+  left: 200px;
+  width: 750px;
+  box-shadow: 5px 5px 5px #888888;
 }
 
 /*divs in color-swatch grid*/
 div.box {
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
     outline: .5px black solid;
     float: left;
 }
@@ -66,16 +74,30 @@ div.box:hover {
   border: 1px solid red;
 }
 
-section{
-  width: 100%;
-}
-
 /*divs in canvas grid*/
 div.grid {
-
     top: 10px;
     width: 15px;
     height: 15px;
     outline: .5px lightGray solid ;
-    float: right;
+    float: left;
 }
+
+#Erase{
+  position: absolute;
+  top: 150;
+  left: 1100;
+  width: 150px;
+  box-shadow: 5px 5px 5px #888888;
+  text-shadow: 2px 2px 2px #888888;
+}
+
+#Clear{
+  position: absolute;
+  top: 220;
+  left: 1100;
+  width: 150px;
+  box-shadow: 5px 5px 5px #888888;
+  text-shadow: 2px 2px 2px #888888;
+}
+
